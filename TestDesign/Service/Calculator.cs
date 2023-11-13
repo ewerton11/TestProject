@@ -1,6 +1,6 @@
-﻿namespace TestProject;
+﻿namespace TestProject.Service;
 
-public class Calculator
+public class Calculator : ICalculator
 {
     public int Add(int a, int b)
     {

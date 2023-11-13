@@ -1,4 +1,8 @@
-﻿using TestProject;
+﻿using Microsoft.AspNetCore.Mvc;
+using Moq;
+using TestProject;
+using TestProject.Controllers;
+using TestProject.Service;
 
 namespace TestProjectTest;
 
@@ -8,13 +12,17 @@ public class CalculatorTest
     public void Add_ShouldReturnCorrectSum()
     {
         // Arrange
-        Calculator calculator = new Calculator();
+        var calculatorMock = new Mock<ICalculator>();
+        calculatorMock.Setup(c => c.Add(3, 5)).Returns(8);
+
+        var controller = new HomerController(calculatorMock.Object);
 
         // Act
-        int result = calculator.Add(3, 5);
+        IActionResult result = controller.Index();
 
         // Assert
-        Assert.Equal(8, result);
+        var contentResult = Assert.IsType<ContentResult>(result);  // Verificar o tipo do resultado
+        Assert.Equal("Resultado da soma: 8", contentResult.Content);
     }
 
     [Fact]
