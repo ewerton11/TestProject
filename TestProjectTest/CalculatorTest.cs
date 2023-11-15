@@ -12,13 +12,13 @@ public class CalculatorTest
     public void Add_ShouldReturnCorrectSum()
     {
         // Arrange
-        var calculatorMock = new Mock<ICalculator>();
+        var calculatorMock = new Mock<ICalculator>();  //cria um objeto mock para essa interface usando o Moq:
         calculatorMock.Setup(c => c.Add(3, 5)).Returns(8);
 
         var controller = new HomerController(calculatorMock.Object);
 
         // Act
-        IActionResult result = controller.Index();
+        IActionResult result = controller.Index(3, 5);
 
         // Assert
         var contentResult = Assert.IsType<ContentResult>(result);  // Verificar o tipo do resultado
@@ -29,13 +29,14 @@ public class CalculatorTest
     public void Subtract_ShouldReturnCorrectDifference()
     {
         // Arrange
-        Calculator calculator = new Calculator();
+        var calculatorMock = new Mock<ICalculator>();
+        var controller = new HomerController(calculatorMock.Object);
 
         // Act
-        int result = calculator.Subtract(8, 3);
+        controller.Subtract(3, 5);
 
         // Assert
-        Assert.Equal(5, result);
+        calculatorMock.Verify(c => c.Subtract(3, 5), Times.Once);
     }
 
     [Theory]

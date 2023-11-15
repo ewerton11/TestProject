@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TestProject.Service;
 
 namespace TestProject.Controllers;
 
@@ -13,10 +12,15 @@ public class HomerController : ControllerBase
         _calculator = calculator;
     }
 
-    public IActionResult Index()
+    public IActionResult Index(int a, int b)
     {
-        int result = _calculator.Add(3, 5);
+        int result = _calculator.Add(a, b);
 
         return Content($"Resultado da soma: {result}");
+    }
+
+    public int Subtract(int a, int b)
+    {
+        return _calculator.Subtract(a, b);
     }
 }
